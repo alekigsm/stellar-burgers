@@ -1,13 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineSlices, configureStore } from '@reduxjs/toolkit';
+import { TIngredient } from '@utils-types';
 
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
+import { ingredientsSlicer } from '../slice/burger/ingredientsSlice';
 
-const rootReducer = () => {}; // Заменить на импорт настоящего редьюсера
-
+export const rootReducer = combineSlices(ingredientsSlicer);
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production'
