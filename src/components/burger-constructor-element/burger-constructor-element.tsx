@@ -9,7 +9,6 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
     const handleMoveUp = () => {};
 
     const handleClose = () => {};
-
     return (
       <BurgerConstructorElementUI
         ingredient={ingredient}

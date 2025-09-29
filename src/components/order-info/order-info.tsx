@@ -1,10 +1,23 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { getFeeds } from '../../slice/feed/feedSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFeed } from '../../slice/feed/actions';
+import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
+import { getOrder } from '../../slice/order/actions';
+import { getOrders } from '../../slice/order/orderSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
+  const { ingredients } = useSelector(getIngredientsSelector);
+  const {} = useSelector(getOrders);
+  /* const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getFeed() as any);
+  }, [dispatch]); */
 
   const orderData = {
     createdAt: '',
@@ -16,14 +29,12 @@ export const OrderInfo: FC = () => {
     number: 0
   };
 
-  const ingredients: TIngredient[] = [];
+  // const ingredients: TIngredient[] = [];
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
-
     const date = new Date(orderData.createdAt);
-
     type TIngredientsWithCount = {
       [key: string]: TIngredient & { count: number };
     };

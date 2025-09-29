@@ -1,20 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredient } from '@utils-types';
+import { TConstructorIngredient } from '@utils-types';
 import { getIngredients } from './actions';
 
-type TIngredientsState = {
-  ingredients: TIngredient[];
+type TConstructState = {
+  ingredients: TConstructorIngredient[];
+  bun: TConstructorIngredient | null;
   loading: boolean;
   error: string | null;
 };
-const initialState: TIngredientsState = {
+const initialState: TConstructState = {
   ingredients: [],
+  bun: null,
   loading: false,
   error: null
 };
 
-export const ingredientsSlicer = createSlice({
-  name: 'Ingredients',
+export const constructorsSlicer = createSlice({
+  name: 'constructors',
   initialState,
   //синхронные экшены
   reducers: {
@@ -30,7 +32,6 @@ export const ingredientsSlicer = createSlice({
   //селекторы состояния
   selectors: {
     getIngredientsSelector: (state) => state
-    
   },
   //обработка асинхронных экшенов
   extraReducers: (builder) => {
@@ -45,10 +46,10 @@ export const ingredientsSlicer = createSlice({
       })
       .addCase(getIngredients.fulfilled, (state, action) => {
         state.loading = false;
-        state.ingredients = action.payload;
       });
   }
 });
 
 //export const { addIngredient, removeIngredient } = ingredientsSlicer.actions;
-export const { getIngredientsSelector } = ingredientsSlicer.selectors;
+export const { getIngredientsSelector } = constructorsSlicer.selectors;
+export default constructorsSlicer.reducer;

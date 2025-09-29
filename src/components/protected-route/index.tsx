@@ -1,8 +1,5 @@
-/* import { useSelector } from '../services/store';
-import {
-  isAuthCheckedSelector,
-  userDataSelector
-} from '../services/store/selectors'; */
+import { Preloader } from '@ui';
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router';
 
 type ProtectedRouteProps = {
@@ -10,7 +7,6 @@ type ProtectedRouteProps = {
   children: React.ReactElement;
 };
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => children;
-
 /* 
 export const ProtectedRoute = ({
   onlyUnAuth,
@@ -38,8 +34,8 @@ export const ProtectedRoute = ({
     const from = location.state?.from || { pathname: '/' };
 
     return <Navigate replace to={from} />;
-  } 
+  }
 
   return children;
 };
-*/
+ */

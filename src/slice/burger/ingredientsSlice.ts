@@ -15,7 +15,7 @@ const initialState: TIngredientsState = {
 };
 
 export const ingredientsSlicer = createSlice({
-  name: 'Ingredients',
+  name: 'ingredients',
   initialState,
   //синхронные экшены
   reducers: {

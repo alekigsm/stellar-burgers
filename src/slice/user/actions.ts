@@ -1,11 +1,11 @@
-import { getFeedsApi } from '@api';
+import { getUserApi } from '@api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getFeed = createAsyncThunk(
-  'feeds/getAll',
+export const getUser = createAsyncThunk(
+  'user/getAll',
   async (_, { rejectWithValue }) => {
     try {
-      return await getFeedsApi();
+      return await getUserApi();
     } catch (error) {
       return rejectWithValue(error);
     }

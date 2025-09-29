@@ -15,9 +15,6 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
-import { useDispatch } from 'react-redux';
-import { getIngredients } from '../../slice/burger/actions';
-import { useEffect } from 'react';
 
 const App = () => {
   const location = useLocation();
