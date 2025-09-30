@@ -19,14 +19,14 @@ export const ingredientsSlicer = createSlice({
   initialState,
   //синхронные экшены
   reducers: {
-    addIngredient: (state, action: PayloadAction<TIngredient>) => {
+    /*    addIngredient: (state, action: PayloadAction<TIngredient>) => {
       state.ingredients.push(action.payload);
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(
         (b) => b._id !== action.payload
       );
-    }
+    } */
   },
   //селекторы состояния
   selectors: {
@@ -64,7 +64,6 @@ export const {
   getIngredientsSelector,
   getIngredientsLoading,
   getIngredientsError,
-
   getIngredientsBun,
   getIngredientsMain,
   getIngredientsSauce
