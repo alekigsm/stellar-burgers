@@ -10,7 +10,7 @@ export const IngredientDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
 
   // Получаем все ингредиенты из стора
-  const { ingredients } = useSelector(getIngredientsSelector);
+  const ingredients = useSelector(getIngredientsSelector);
 
   // Находим конкретный ингредиент по id
   const ingredientData = ingredients.find(

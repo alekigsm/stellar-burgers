@@ -19,18 +19,27 @@ export const ingredientsSlicer = createSlice({
   initialState,
   //синхронные экшены
   reducers: {
-    /*    addIngredient: (state, action: PayloadAction<TIngredient>) => {
+    addIngredient: (state, action: PayloadAction<TIngredient>) => {
       state.ingredients.push(action.payload);
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter(
         (b) => b._id !== action.payload
       );
-    } */
+    }
   },
   //селекторы состояния
   selectors: {
-    getIngredientsSelector: (state) => state
+    getIngredientsSelector: (state) => state.ingredients, // Только массив ингредиентов
+    getIngredientsLoading: (state) => state.loading,
+    getIngredientsError: (state) => state.error,
+    // Можно добавить больше селекторов
+    getIngredientsBun: (state) =>
+      state.ingredients.filter((item) => item.type === 'bun'),
+    getIngredientsMain: (state) =>
+      state.ingredients.filter((item) => item.type === 'main'),
+    getIngredientsSauce: (state) =>
+      state.ingredients.filter((item) => item.type === 'sauce')
   },
   //обработка асинхронных экшенов
   extraReducers: (builder) => {
@@ -51,4 +60,14 @@ export const ingredientsSlicer = createSlice({
 });
 
 //export const { addIngredient, removeIngredient } = ingredientsSlicer.actions;
-export const { getIngredientsSelector } = ingredientsSlicer.selectors;
+export const {
+  getIngredientsSelector,
+  getIngredientsLoading,
+  getIngredientsError,
+
+  getIngredientsBun,
+  getIngredientsMain,
+  getIngredientsSauce
+} = ingredientsSlicer.selectors;
+
+export default ingredientsSlicer.reducer;
