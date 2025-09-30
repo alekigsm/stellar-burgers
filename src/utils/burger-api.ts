@@ -83,7 +83,6 @@ export const getFeedsApi = () =>
   fetch(`${URL}/orders/all`)
     .then((res) => checkResponse<TFeedsResponse>(res))
     .then((data) => {
-      console.log('Feeds смотри тут', data); // ← потом удалить эту строку
       if (data?.success) return data;
       return Promise.reject(data);
     });

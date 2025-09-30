@@ -6,30 +6,17 @@ import { getFeeds } from '../../slice/feed/feedSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFeed } from '../../slice/feed/actions';
 import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
-import { getOrder } from '../../slice/order/actions';
 import { getOrders } from '../../slice/order/orderSlice';
+import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const { ingredients } = useSelector(getIngredientsSelector);
-  const {} = useSelector(getOrders);
-  /* const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getFeed() as any);
-  }, [dispatch]); */
+  const ingredients = useSelector(getIngredientsSelector);
+  const orders = useSelector(getOrders);
+  const number = useParams();
 
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
-
-  // const ingredients: TIngredient[] = [];
+  // Находим заказ по номеру
+  const orderData = orders.find((item) => item.number === Number(number));
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

@@ -1,6 +1,8 @@
 import { FC, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { useSelector } from 'react-redux';
+import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -11,11 +13,8 @@ export const BurgerConstructor: FC = () => {
     },
     ingredients: []
   };
-
   const orderRequest = false;
-
   const orderModalData = null;
-
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
   };

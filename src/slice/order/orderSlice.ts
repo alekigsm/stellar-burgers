@@ -18,16 +18,15 @@ export const orderSlice = createSlice({
   initialState,
   //синхронные экшены
   reducers: {
-    addOrder: (state, action: PayloadAction<TOrder>) => {
-      state.orders.push(action.payload);
-    },
-    removeOrder: (state, action: PayloadAction<string>) => {
-      state.orders = state.orders.filter((b) => b._id !== action.payload);
+    setOrders: (state, action: PayloadAction<TOrder[]>) => {
+      state.orders = action.payload;
     }
   },
   //селекторы состояния
   selectors: {
-    getOrders: (state) => state.orders
+    getOrders: (state) => state.orders,
+    getOrdersLoading: (state) => state.loading,
+    getOrdersError: (state) => state.error
   },
   //обработка асинхронных экшенов
   extraReducers: (builder) => {
@@ -47,6 +46,7 @@ export const orderSlice = createSlice({
   }
 });
 
-//export const { addIngredient, removeIngredient } = ingredientsSlicer.actions;
-export const { getOrders } = orderSlice.selectors;
+export const { getOrders, getOrdersLoading, getOrdersError } =
+  orderSlice.selectors;
+export const { setOrders } = orderSlice.actions;
 export default orderSlice.reducer;

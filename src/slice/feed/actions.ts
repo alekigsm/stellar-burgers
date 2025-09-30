@@ -2,7 +2,7 @@ import { getFeedsApi } from '@api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getFeed = createAsyncThunk(
-  'feeds/getAll',
+  'feed/getAll',
   async (_, { rejectWithValue }) => {
     try {
       return await getFeedsApi();

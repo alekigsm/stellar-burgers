@@ -12,7 +12,7 @@ const maxIngredients = 6;
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
 
-  const { ingredients } = useSelector(getIngredientsSelector); // не ясно надо так-же получать все из селектора или лучше дробить
+  const ingredients = useSelector(getIngredientsSelector);
 
   /** TODO: взять переменную из стора */
 
