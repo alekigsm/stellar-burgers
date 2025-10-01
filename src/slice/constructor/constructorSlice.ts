@@ -1,55 +1,105 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient } from '@utils-types';
-import { getIngredients } from './actions';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
+import { getOrderBurger } from './actions';
 
 type TConstructState = {
-  ingredients: TConstructorIngredient[];
-  bun: TConstructorIngredient | null;
+  constructorItems: {
+    ingredients: TConstructorIngredient[];
+    bun: TConstructorIngredient | null;
+  };
+  orderRequest: boolean;
+  orderModalData: TOrder | null;
   loading: boolean;
   error: string | null;
 };
+
 const initialState: TConstructState = {
-  ingredients: [],
-  bun: null,
+  constructorItems: {
+    ingredients: [],
+    bun: null
+  },
+  orderRequest: false,
+  orderModalData: null,
   loading: false,
   error: null
 };
 
-export const constructorsSlicer = createSlice({
-  name: 'constructors',
+export const burgerConstructorSlicer = createSlice({
+  name: 'burgerConstructor',
   initialState,
-  //синхронные экшены
   reducers: {
-    /*    addIngredient: (state, action: PayloadAction<TIngredient>) => {
-      state.ingredients.push(action.payload);
+    addIngredient: (state, action: PayloadAction<TIngredient>) => {
+      const id = nanoid();
+      if (action.payload.type === 'bun') {
+        state.constructorItems.bun = { id, ...action.payload };
+      } else {
+        state.constructorItems.ingredients.push({ id, ...action.payload });
+      }
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
-      state.ingredients = state.ingredients.filter(
-        (b) => b._id !== action.payload
-      );
-    } */
+      state.constructorItems.ingredients =
+        state.constructorItems.ingredients.filter(
+          (item) => item.id !== action.payload
+        );
+    },
+    moveIngredient: (
+      state,
+      action: PayloadAction<{ from: number; to: number }>
+    ) => {
+      const { from, to } = action.payload;
+      const [movedItem] = state.constructorItems.ingredients.splice(from, 1);
+      state.constructorItems.ingredients.splice(to, 0, movedItem);
+    },
+    clearConstructor: (state) => {
+      state.constructorItems = {
+        ingredients: [],
+        bun: null
+      };
+    }
   },
-  //селекторы состояния
   selectors: {
-    getIngredientsSelector: (state) => state
+    getBurgerConstructorSelector: (state) => state.constructorItems,
+    getBurgerConstructorOrderModalData: (state) => state.orderModalData,
+    getBurgerConstructorOrderRequest: (state) => state.orderRequest,
+    getBurgerConstructorLoading: (state) => state.loading,
+    getBurgerConstructorError: (state) => state.error
   },
-  //обработка асинхронных экшенов
   extraReducers: (builder) => {
     builder
-      .addCase(getIngredients.pending, (state) => {
+      .addCase(getOrderBurger.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.orderRequest = true;
       })
-      .addCase(getIngredients.rejected, (state, action) => {
+      .addCase(getOrderBurger.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ?? null;
+        state.orderRequest = false;
+        state.error = action.error.message ?? 'Ошибка при создании заказа';
       })
-      .addCase(getIngredients.fulfilled, (state, action) => {
+      .addCase(getOrderBurger.fulfilled, (state, action) => {
         state.loading = false;
+        state.orderRequest = false;
+        state.orderModalData = action.payload.order;
+        state.constructorItems = {
+          ingredients: [],
+          bun: null
+        };
       });
   }
 });
 
-//export const { addIngredient, removeIngredient } = ingredientsSlicer.actions;
-export const { getIngredientsSelector } = constructorsSlicer.selectors;
-export default constructorsSlicer.reducer;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+  clearConstructor
+} = burgerConstructorSlicer.actions;
+
+export const {
+  getBurgerConstructorSelector,
+  getBurgerConstructorOrderModalData,
+  getBurgerConstructorOrderRequest,
+  getBurgerConstructorLoading,
+  getBurgerConstructorError
+} = burgerConstructorSlicer.selectors;
+
+export default burgerConstructorSlicer.reducer;

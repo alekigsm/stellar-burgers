@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit'; // ← Добавь createSelector
 import { TUser } from '@utils-types';
 import { getUser } from './actions';
 
@@ -42,7 +42,7 @@ export const userSlice = createSlice({
     }
   },
   selectors: {
-    getUserData: (state) => ({ email: state.email, name: state.name }),
+    // ❌ УБРАТЬ getUserData отсюда
     getUserEmail: (state) => state.email,
     getUserName: (state) => state.name,
     getUserLoading: (state) => state.loading,
@@ -75,12 +75,16 @@ export const userSlice = createSlice({
 // Экспорты
 export const { clearUser, setUser, setError } = userSlice.actions;
 export const {
-  getUserData,
   getUserEmail,
   getUserName,
   getUserLoading,
   getUserError,
   getUserSuccess
 } = userSlice.selectors;
+
+export const getUserData = createSelector(
+  [getUserEmail, getUserName],
+  (email, name) => ({ email, name })
+);
 
 export default userSlice.reducer;
