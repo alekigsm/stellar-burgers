@@ -17,6 +17,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { getUser } from '../../slice/user/actions';
 
 const App = () => {
   const location = useLocation();
@@ -26,11 +27,11 @@ const App = () => {
   const handleCloseModal = () => {
     navigate(-1);
   };
-  /*   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkUserAuth());
-  }, []); */
+    dispatch(getUser() as any);
+  }, []);
   return (
     <div className={styles.app}>
       <AppHeader />

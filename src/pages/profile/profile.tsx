@@ -1,9 +1,9 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserData, setUser } from '../../slice/user/userSlice';
-import { updateUserApi } from '@api';
+import { getUserData } from '../../slice/user/userSlice';
 import { Preloader } from '@ui';
+import { updateUser } from '../../slice/user/actions';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
@@ -35,6 +35,7 @@ export const Profile: FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    dispatch(updateUser(formValue) as any);
   };
 
   const handleCancel = (e: SyntheticEvent) => {
