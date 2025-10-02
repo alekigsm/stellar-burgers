@@ -3,12 +3,17 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserData, setUser } from '../../slice/user/userSlice';
 import { updateUserApi } from '@api';
+import { Preloader } from '@ui';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
 
   const user = useSelector(getUserData);
   const dispatch = useDispatch();
+  if (!user) {
+    return <Preloader />;
+  }
+
   const [formValue, setFormValue] = useState({
     name: user.name,
     email: user.email,

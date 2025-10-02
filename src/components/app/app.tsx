@@ -15,6 +15,8 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 const App = () => {
   const location = useLocation();
@@ -24,6 +26,11 @@ const App = () => {
   const handleCloseModal = () => {
     navigate(-1);
   };
+  /*   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, []); */
   return (
     <div className={styles.app}>
       <AppHeader />

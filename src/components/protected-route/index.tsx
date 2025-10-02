@@ -9,7 +9,7 @@ type ProtectedRouteProps = {
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => children;
 /* 
 export const ProtectedRoute = ({
-  onlyUnAuth,
+  onlyUnAuth=false,
   children
 }: ProtectedRouteProps) => {
   const isAuthChecked = useSelector(isAuthCheckedSelector); //  isAuthCheckedSelector — селектор получения состояния загрузки пользователя
