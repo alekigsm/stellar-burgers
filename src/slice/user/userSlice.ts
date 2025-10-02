@@ -5,7 +5,15 @@ import {
   isAction
 } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { getUser, login, logout } from './actions';
+import {
+  forgotPassword,
+  getUser,
+  login,
+  logout,
+  registerUser,
+  resetPassword,
+  updateUser
+} from './actions';
 
 type TUserState = {
   user: TUser | null;
@@ -61,6 +69,50 @@ export const userSlice = createSlice({
         state.user = action.payload.user;
         state.error = null;
         state.isAuthChecked = true;
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.error =
+          action.error.message ?? 'Ошибка при загрузке данных пользователя';
+        state.isAuthChecked = true;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.error = null;
+        state.isAuthChecked = true;
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.error =
+          action.error.message ?? 'Ошибка при загрузке данных пользователя';
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.error = null;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.error =
+          action.error.message ?? 'Ошибка при загрузке данных пользователя';
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.error = null;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.error =
+          action.error.message ?? 'Ошибка при загрузке данных пользователя';
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.error = null;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;

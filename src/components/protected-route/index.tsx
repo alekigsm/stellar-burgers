@@ -1,19 +1,20 @@
 import { Preloader } from '@ui';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router';
+import { getAuthChecked, getUserData } from '../../slice/user/userSlice';
 
 type ProtectedRouteProps = {
   onlyUnAuth?: boolean;
   children: React.ReactElement;
 };
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => children;
-/* 
+// export const ProtectedRoute = ({ children }: ProtectedRouteProps) => children;
+
 export const ProtectedRoute = ({
-  onlyUnAuth=false,
+  onlyUnAuth = false,
   children
 }: ProtectedRouteProps) => {
-  const isAuthChecked = useSelector(isAuthCheckedSelector); //  isAuthCheckedSelector — селектор получения состояния загрузки пользователя
-  const user = useSelector(userDataSelector); //  userDataSelector — селектор получения пользователя из store
+  const isAuthChecked = useSelector(getAuthChecked); //  isAuthCheckedSelector — селектор получения состояния загрузки пользователя
+  const user = useSelector(getUserData); //  userDataSelector — селектор получения пользователя из store
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -36,10 +37,5 @@ export const ProtectedRoute = ({
     return <Navigate replace to={from} />;
   }
 
-  onlyUnAuth && !user
-
-  !onlyUnAuth && user
-
   return children;
 };
- */
