@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
 import { getIngredients } from './actions';
 
@@ -17,7 +17,6 @@ const initialState: TIngredientsState = {
 export const ingredientsSlicer = createSlice({
   name: 'ingredients',
   initialState,
-  //синхронные экшены
   reducers: {
     /*    addIngredient: (state, action: PayloadAction<TIngredient>) => {
       state.ingredients.push(action.payload);
@@ -28,20 +27,11 @@ export const ingredientsSlicer = createSlice({
       );
     } */
   },
-  //селекторы состояния
   selectors: {
-    getIngredientsSelector: (state) => state.ingredients, // Только массив ингредиентов
+    getIngredientsSelector: (state) => state.ingredients,
     getIngredientsLoading: (state) => state.loading,
-    getIngredientsError: (state) => state.error,
-    // Можно добавить больше селекторов
-    getIngredientsBun: (state) =>
-      state.ingredients.filter((item) => item.type === 'bun'),
-    getIngredientsMain: (state) =>
-      state.ingredients.filter((item) => item.type === 'main'),
-    getIngredientsSauce: (state) =>
-      state.ingredients.filter((item) => item.type === 'sauce')
+    getIngredientsError: (state) => state.error
   },
-  //обработка асинхронных экшенов
   extraReducers: (builder) => {
     builder
       .addCase(getIngredients.pending, (state) => {
@@ -59,14 +49,30 @@ export const ingredientsSlicer = createSlice({
   }
 });
 
-//export const { addIngredient, removeIngredient } = ingredientsSlicer.actions;
+// Базовые селекторы
 export const {
   getIngredientsSelector,
   getIngredientsLoading,
-  getIngredientsError,
-  getIngredientsBun,
-  getIngredientsMain,
-  getIngredientsSauce
+  getIngredientsError
 } = ingredientsSlicer.selectors;
+
+// Мемоизированные селекторы с указанием типов
+export const getIngredientsBun = createSelector(
+  [getIngredientsSelector],
+  (ingredients: TIngredient[]) =>
+    ingredients.filter((item) => item.type === 'bun')
+);
+
+export const getIngredientsMain = createSelector(
+  [getIngredientsSelector],
+  (ingredients: TIngredient[]) =>
+    ingredients.filter((item) => item.type === 'main')
+);
+
+export const getIngredientsSauce = createSelector(
+  [getIngredientsSelector],
+  (ingredients: TIngredient[]) =>
+    ingredients.filter((item) => item.type === 'sauce')
+);
 
 export default ingredientsSlicer.reducer;

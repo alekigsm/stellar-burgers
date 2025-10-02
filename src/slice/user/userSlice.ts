@@ -1,86 +1,75 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  PayloadAction,
+  createSelector,
+  isAction
+} from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { getUser } from './actions';
+import { getUser, login, logout } from './actions';
 
 type TUserState = {
-  email: string;
-  name: string;
-  loading: boolean;
-  error: string | null;
-  success: boolean;
+  user: TUser | null;
+  isAuthChecked: boolean;
+  error?: string | null;
 };
 
 const initialState: TUserState = {
-  email: '',
-  name: '',
-  loading: false,
-  error: null,
-  success: false
+  user: null,
+  isAuthChecked: false,
+  error: null
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    clearUser: (state) => {
-      state.email = '';
-      state.name = '';
+    setUser: (state, action: PayloadAction<TUser | null>) => {
+      state.user = action.payload;
       state.error = null;
-      state.success = false;
     },
-    setUser: (
-      state,
-      action: PayloadAction<{ email: string; name: string }>
-    ) => {
-      state.email = action.payload.email;
-      state.name = action.payload.name;
-      state.success = true;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-      state.success = false;
+    setIsAuthChecked: (state, action: PayloadAction<boolean>) => {
+      state.isAuthChecked = action.payload;
+      state.error = null;
     }
   },
   selectors: {
-    getUserData: (state) => ({ email: state.email, name: state.name }),
-    getUserEmail: (state) => state.email,
-    getUserName: (state) => state.name,
-    getUserLoading: (state) => state.loading,
-    getUserError: (state) => state.error,
-    getUserSuccess: (state) => state.success
+    getUserData: (state) => state.user,
+    getAuthChecked: (state) => state.isAuthChecked
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state) => {
-        state.loading = true;
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isAuthChecked = true;
+      })
+      .addCase(login.pending, (state) => {
         state.error = null;
-        state.success = false;
+      })
+      .addCase(login.rejected, (state) => {
+        state.error = null;
+        state.isAuthChecked = true;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.error = null;
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.loading = false;
         state.error =
           action.error.message ?? 'Ошибка при загрузке данных пользователя';
-        state.success = false;
+        state.isAuthChecked = true;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.email = action.payload.user.email;
-        state.name = action.payload.user.name;
+        state.user = action.payload.user;
         state.error = null;
-        state.success = true;
+        state.isAuthChecked = true;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
       });
   }
 });
 
 // Экспорты
-export const { clearUser, setUser, setError } = userSlice.actions;
-export const {
-  getUserData,
-  getUserEmail,
-  getUserName,
-  getUserLoading,
-  getUserError,
-  getUserSuccess
-} = userSlice.selectors;
+export const { setUser, setIsAuthChecked } = userSlice.actions;
+export const { getUserData, getAuthChecked } = userSlice.selectors;
 
 export default userSlice.reducer;

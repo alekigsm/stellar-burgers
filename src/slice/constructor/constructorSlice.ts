@@ -12,6 +12,7 @@ type TConstructState = {
   loading: boolean;
   error: string | null;
 };
+
 const initialState: TConstructState = {
   constructorItems: {
     ingredients: [],
@@ -26,7 +27,6 @@ const initialState: TConstructState = {
 export const burgerConstructorSlicer = createSlice({
   name: 'burgerConstructor',
   initialState,
-  //синхронные экшены
   reducers: {
     addIngredient: (state, action: PayloadAction<TIngredient>) => {
       const id = nanoid();
@@ -39,35 +39,67 @@ export const burgerConstructorSlicer = createSlice({
     removeIngredient: (state, action: PayloadAction<string>) => {
       state.constructorItems.ingredients =
         state.constructorItems.ingredients.filter(
-          (b) => b._id !== action.payload
+          (item) => item.id !== action.payload
         );
+    },
+    moveIngredient: (
+      state,
+      action: PayloadAction<{ from: number; to: number }>
+    ) => {
+      const { from, to } = action.payload;
+      const [movedItem] = state.constructorItems.ingredients.splice(from, 1);
+      state.constructorItems.ingredients.splice(to, 0, movedItem);
+    },
+    clearConstructor: (state) => {
+      state.constructorItems = {
+        ingredients: [],
+        bun: null
+      };
     }
   },
-  //селекторы состояния
   selectors: {
-    getBurgerConstructorSelector: (state) => state
+    getBurgerConstructorSelector: (state) => state.constructorItems,
+    getBurgerConstructorOrderModalData: (state) => state.orderModalData,
+    getBurgerConstructorOrderRequest: (state) => state.orderRequest,
+    getBurgerConstructorLoading: (state) => state.loading,
+    getBurgerConstructorError: (state) => state.error
   },
-  //обработка асинхронных экшенов
   extraReducers: (builder) => {
     builder
       .addCase(getOrderBurger.pending, (state) => {
         state.loading = true;
-        state.error = null;
+        state.orderRequest = true;
       })
       .addCase(getOrderBurger.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ?? 'Ошибка при загрузке ленты';
+        state.orderRequest = false;
+        state.error = action.error.message ?? 'Ошибка при создании заказа';
       })
       .addCase(getOrderBurger.fulfilled, (state, action) => {
         state.loading = false;
+        state.orderRequest = false;
         state.orderModalData = action.payload.order;
-        state.orderRequest = action.payload.success;
+        state.constructorItems = {
+          ingredients: [],
+          bun: null
+        };
       });
   }
 });
 
-export const { addIngredient, removeIngredient } =
-  burgerConstructorSlicer.actions;
-export const { getBurgerConstructorSelector } =
-  burgerConstructorSlicer.selectors;
+export const {
+  addIngredient,
+  removeIngredient,
+  moveIngredient,
+  clearConstructor
+} = burgerConstructorSlicer.actions;
+
+export const {
+  getBurgerConstructorSelector,
+  getBurgerConstructorOrderModalData,
+  getBurgerConstructorOrderRequest,
+  getBurgerConstructorLoading,
+  getBurgerConstructorError
+} = burgerConstructorSlicer.selectors;
+
 export default burgerConstructorSlicer.reducer;
