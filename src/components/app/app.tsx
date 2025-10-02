@@ -29,7 +29,7 @@ const App = () => {
       <AppHeader />
       <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
-        {/*  <Route path='/feed' element={<Feed />} />
+        <Route path='/feed' element={<Feed />} />
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='/profile/orders/:number' element={<OrderInfo />} />
@@ -81,9 +81,9 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path='*' element={<NotFound404 />} /> */}
+        <Route path='*' element={<NotFound404 />} />
       </Routes>
-      {/*   {backgroundLocation && (
+      {backgroundLocation && (
         <Routes>
           <Route
             path='/feed/:number'
@@ -110,7 +110,7 @@ const App = () => {
             }
           />
         </Routes>
-      )} */}
+      )}
     </div>
   );
 };
