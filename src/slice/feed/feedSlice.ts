@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient, TOrder, TOrdersData } from '@utils-types';
-import { getFeed } from './actions';
+import { getFeeds } from './actions';
 
 type TFeedsState = {
   feed: TOrdersData;
@@ -28,22 +28,22 @@ export const feedSlice = createSlice({
   },
   //селекторы состояния
   selectors: {
-    getFeeds: (state) => state.feed,
+    getFeed: (state) => state.feed,
     getFeedsLoading: (state) => state.loading,
     getFeedsError: (state) => state.error
   },
   //обработка асинхронных экшенов
   extraReducers: (builder) => {
     builder
-      .addCase(getFeed.pending, (state) => {
+      .addCase(getFeeds.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getFeed.rejected, (state, action) => {
+      .addCase(getFeeds.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Ошибка при загрузке ленты';
       })
-      .addCase(getFeed.fulfilled, (state, action) => {
+      .addCase(getFeeds.fulfilled, (state, action) => {
         state.loading = false;
         state.feed = action.payload;
         state.error = null;
@@ -52,5 +52,5 @@ export const feedSlice = createSlice({
 });
 
 export const { setFeeds } = feedSlice.actions;
-export const { getFeeds, getFeedsLoading, getFeedsError } = feedSlice.selectors;
+export const { getFeed, getFeedsLoading, getFeedsError } = feedSlice.selectors;
 export default feedSlice.reducer;

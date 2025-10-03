@@ -1,6 +1,6 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
-import { getOrderBurger } from './actions';
+import { orderBurger } from './actions';
 
 type TConstructState = {
   constructorItems: {
@@ -42,19 +42,66 @@ export const burgerConstructorSlicer = createSlice({
           (item) => item.id !== action.payload
         );
     },
-    moveIngredient: (
+    /* moveIngredient: (
       state,
       action: PayloadAction<{ from: number; to: number }>
     ) => {
       const { from, to } = action.payload;
       const [movedItem] = state.constructorItems.ingredients.splice(from, 1);
+      console.log('первый', movedItem.name);
       state.constructorItems.ingredients.splice(to, 0, movedItem);
+      console.log(
+        'второй',
+        state.constructorItems.ingredients.map((item) => item.name)
+      );
+    }, */
+    moveIngredient: (
+      state,
+      action: PayloadAction<{ from: number; to: number }>
+    ) => {
+      const { from, to } = action.payload;
+      const ingredients = state.constructorItems.ingredients;
+
+      // Проверяем валидность индексов
+      if (
+        from < 0 ||
+        from >= ingredients.length ||
+        to < 0 ||
+        to > ingredients.length
+      ) {
+        console.error('Некорректные индексы:', from, to);
+        return;
+      }
+
+      // Если перемещение на ту же позицию - выходим
+      if (from === to) {
+        console.log('Перемещен:');
+        return;
+      }
+
+      const newIngredients = [...ingredients];
+      const [movedItem] = newIngredients.splice(from, 1);
+      newIngredients.splice(to, 0, movedItem);
+
+      state.constructorItems.ingredients = newIngredients;
+
+      console.log('Перемещен:', movedItem.name);
+      console.log(
+        'Новый порядок:',
+        newIngredients.map((item) => item.name)
+      );
     },
     clearConstructor: (state) => {
       state.constructorItems = {
         ingredients: [],
         bun: null
       };
+    },
+    resetOrderRequest: (state) => {
+      state.orderRequest = false;
+    },
+    resetOrderModalData: (state) => {
+      state.orderModalData = null;
     }
   },
   selectors: {
@@ -66,16 +113,16 @@ export const burgerConstructorSlicer = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getOrderBurger.pending, (state) => {
+      .addCase(orderBurger.pending, (state) => {
         state.loading = true;
         state.orderRequest = true;
       })
-      .addCase(getOrderBurger.rejected, (state, action) => {
+      .addCase(orderBurger.rejected, (state, action) => {
         state.loading = false;
         state.orderRequest = false;
         state.error = action.error.message ?? 'Ошибка при создании заказа';
       })
-      .addCase(getOrderBurger.fulfilled, (state, action) => {
+      .addCase(orderBurger.fulfilled, (state, action) => {
         state.loading = false;
         state.orderRequest = false;
         state.orderModalData = action.payload.order;
@@ -91,7 +138,9 @@ export const {
   addIngredient,
   removeIngredient,
   moveIngredient,
-  clearConstructor
+  clearConstructor,
+  resetOrderRequest,
+  resetOrderModalData
 } = burgerConstructorSlicer.actions;
 
 export const {

@@ -4,13 +4,13 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector } from 'react-redux';
 import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
-import { getOrders } from '../../slice/order/orderSlice';
+import { selectorOrders } from '../../slice/order/orderSlice';
 import { useParams } from 'react-router-dom';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const ingredients = useSelector(getIngredientsSelector);
-  const orders = useSelector(getOrders);
+  const orders = useSelector(selectorOrders);
   const number = useParams();
 
   // Находим заказ по номеру

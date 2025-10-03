@@ -10,18 +10,15 @@ import {
   updateUserApi
 } from '@api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-<<<<<<< HEAD
-import { getCookie } from '../../utils/cookie';
-=======
 import { getCookie, setCookie } from '../../utils/cookie';
->>>>>>> 2a9aee326da93850194ea41c4f1c03affcd8c23d
-
+//refreshToken
 export const login = createAsyncThunk(
   'user/login',
   async (data: TLoginData, { rejectWithValue }) => {
     try {
       const response = await loginUserApi(data);
-      setCookie('accessToken', data.email);
+      setCookie('accessToken', response.accessToken);
+      localStorage.setItem('refreshToken', response.refreshToken);
       return response;
     } catch (error) {
       return rejectWithValue(error);

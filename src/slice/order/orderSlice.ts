@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
-import { getOrder } from './actions';
+import { getOrderByNumber, getOrders } from './actions';
 
 type TOrdersState = {
   orders: TOrder[];
   loading: boolean;
   error: string | null;
+  ordersByNumber: TOrder[];
 };
 
 const initialState: TOrdersState = {
   orders: [],
   loading: false,
-  error: null
+  error: null,
+  ordersByNumber: []
 };
 export const orderSlice = createSlice({
   name: 'orders',
@@ -24,29 +26,46 @@ export const orderSlice = createSlice({
   },
   //селекторы состояния
   selectors: {
-    getOrders: (state) => state.orders,
+    selectorOrders: (state) => state.orders,
     getOrdersLoading: (state) => state.loading,
-    getOrdersError: (state) => state.error
+    getOrdersError: (state) => state.error,
+    selectorOrderByNumber: (state) => state.ordersByNumber
   },
   //обработка асинхронных экшенов
   extraReducers: (builder) => {
     builder
-      .addCase(getOrder.pending, (state) => {
+      .addCase(getOrders.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getOrder.rejected, (state, action) => {
+      .addCase(getOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Ошибка при загрузке ленты';
       })
-      .addCase(getOrder.fulfilled, (state, action) => {
+      .addCase(getOrders.fulfilled, (state, action) => {
         state.loading = false;
-        state.orders = action.payload; // ← массив заказов
+        state.orders = action.payload;
+      })
+      .addCase(getOrderByNumber.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getOrderByNumber.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? 'Ошибка при загрузке ленты';
+      })
+      .addCase(getOrderByNumber.fulfilled, (state, action) => {
+        state.loading = false;
+        state.ordersByNumber = action.payload.orders;
       });
   }
 });
 
-export const { getOrders, getOrdersLoading, getOrdersError } =
-  orderSlice.selectors;
+export const {
+  selectorOrders,
+  getOrdersLoading,
+  getOrdersError,
+  selectorOrderByNumber
+} = orderSlice.selectors;
 export const { setOrders } = orderSlice.actions;
 export default orderSlice.reducer;

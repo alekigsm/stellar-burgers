@@ -1,9 +1,9 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { getUserData, setUser } from '../../slice/user/userSlice';
 import { Preloader } from '@ui';
 import { updateUser } from '../../slice/user/actions';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const Profile: FC = () => {
   /** TODO: взять переменную из стора */
@@ -27,7 +27,6 @@ export const Profile: FC = () => {
       email: user?.email || ''
     }));
   }, [user]);
-  console.log('dos', user);
 
   const isFormChanged =
     formValue.name !== user?.name ||
@@ -37,16 +36,15 @@ export const Profile: FC = () => {
   /// верно?
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    console.log('do', user);
     if (user) {
       dispatch(
-        setUser({
+        updateUser({
           name: formValue.name,
-          email: formValue.email
+          email: formValue.email,
+          password: formValue.password
         })
       );
     }
-    console.log(`posle`, formValue.name);
   };
 
   const handleCancel = (e: SyntheticEvent) => {
