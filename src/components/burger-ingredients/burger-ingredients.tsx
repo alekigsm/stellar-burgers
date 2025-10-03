@@ -3,7 +3,6 @@ import { useInView } from 'react-intersection-observer';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getIngredientsBun,
   getIngredientsError,
@@ -14,6 +13,7 @@ import {
 } from '../../slice/burger/ingredientsSlice';
 import { Preloader } from '@ui';
 import { getIngredients } from '../../slice/burger/actions';
+import { useDispatch, useSelector } from '../../services/store';
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
@@ -29,7 +29,7 @@ export const BurgerIngredients: FC = () => {
   useEffect(() => {
     // Загружаем только если ингредиентов еще нет
     if (ingredients.length === 0 && !loading) {
-      dispatch(getIngredients() as any);
+      dispatch(getIngredients());
     }
   }, [dispatch, ingredients.length, loading]);
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');

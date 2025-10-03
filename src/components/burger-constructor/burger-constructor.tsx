@@ -3,6 +3,7 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  addIngredient,
   getBurgerConstructorOrderModalData,
   getBurgerConstructorOrderRequest,
   getBurgerConstructorSelector,
