@@ -8,12 +8,15 @@ import {
   updateUserApi
 } from '@api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { setIsAuthChecked, setUser } from './userSlice';
+import { setCookie } from '../../utils/cookie';
 
 export const login = createAsyncThunk(
   'user/login',
   async (data: TLoginData, { rejectWithValue }) => {
     try {
       const response = await loginUserApi(data);
+      setCookie('accessToken', data.email);
       return response;
     } catch (error) {
       return rejectWithValue(error);
@@ -42,6 +45,22 @@ export const logout = createAsyncThunk(
     }
   }
 );
+
+/* export const checkUserAuth = createAsyncThunk(
+  'user/checkUserAuth',
+  async (_, { dispatch }) => {
+    if (api.isTokenExists()) {
+      api
+        .getUser()
+        .then((user) => {
+          dispatch(setUser(user));
+        })
+        .finally(() => dispatch(setIsAuthChecked(true)));
+    } else {
+      dispatch(setIsAuthChecked(true));
+    }
+  }
+); */
 /* 
 export const registerUser = createAsyncThunk(
   'user/register',
