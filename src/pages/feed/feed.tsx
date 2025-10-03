@@ -9,7 +9,7 @@ export const Feed: FC = () => {
   /** TODO: взять переменную из стора */
 
   const orders: TOrder[] = useSelector(getOrders);
-
+  console.log('вот ордеры', orders);
   if (!orders.length) {
     return <Preloader />;
   }

@@ -15,9 +15,9 @@ import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from '../../slice/user/actions';
+import { useDispatch } from '../../services/store';
 
 const App = () => {
   const location = useLocation();
@@ -30,7 +30,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser() as any);
+    dispatch(getUser());
   }, []);
   return (
     <div className={styles.app}>

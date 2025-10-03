@@ -1,10 +1,8 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { getFeeds } from '../../slice/feed/feedSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFeed } from '../../slice/feed/actions';
+import { useSelector } from 'react-redux';
 import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
 import { getOrders } from '../../slice/order/orderSlice';
 import { useParams } from 'react-router-dom';
