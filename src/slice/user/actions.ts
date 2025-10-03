@@ -4,12 +4,13 @@ import {
   loginUserApi,
   logoutApi,
   registerUserApi,
+  resetPasswordApi,
   TLoginData,
+  TRegisterData,
   updateUserApi
 } from '@api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setIsAuthChecked, setUser } from './userSlice';
-import { setCookie } from '../../utils/cookie';
+import { getCookie } from '../../utils/cookie';
 
 export const login = createAsyncThunk(
   'user/login',
@@ -46,27 +47,11 @@ export const logout = createAsyncThunk(
   }
 );
 
-/* export const checkUserAuth = createAsyncThunk(
-  'user/checkUserAuth',
-  async (_, { dispatch }) => {
-    if (api.isTokenExists()) {
-      api
-        .getUser()
-        .then((user) => {
-          dispatch(setUser(user));
-        })
-        .finally(() => dispatch(setIsAuthChecked(true)));
-    } else {
-      dispatch(setIsAuthChecked(true));
-    }
-  }
-); */
-/* 
 export const registerUser = createAsyncThunk(
   'user/register',
-  async (_, { rejectWithValue }) => {
+  async (data: TRegisterData, { rejectWithValue }) => {
     try {
-      return await registerUserApi();
+      return await registerUserApi(data);
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -75,9 +60,9 @@ export const registerUser = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   'user/forgotPassword',
-  async (_, { rejectWithValue }) => {
+  async (email: string, { rejectWithValue }) => {
     try {
-      return await forgotPasswordApi();
+      return await forgotPasswordApi({ email: email });
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -86,9 +71,12 @@ export const forgotPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   'user/resetPassword',
-  async (_, { rejectWithValue }) => {
+  async (password: string, { rejectWithValue }) => {
     try {
-      return await resetPasswordApi();
+      return await resetPasswordApi({
+        password: password,
+        token: getCookie('accessToken') || ''
+      });
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -97,14 +85,11 @@ export const resetPassword = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'user/update',
-  async (_, { rejectWithValue }) => {
+  async (user: Partial<TRegisterData>, { rejectWithValue }) => {
     try {
-      return await updateUserApi();
+      return await updateUserApi(user);
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
-
-
- */
