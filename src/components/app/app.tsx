@@ -21,7 +21,7 @@ import { useDispatch } from '../../services/store';
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const backgroundLocation = location.state?.backgroundLocation;
+  const backgroundLocation = location.state?.background;
 
   const handleCloseModal = () => {
     navigate(-1);
@@ -31,7 +31,16 @@ const App = () => {
   useEffect(() => {
     dispatch(getUser());
   }, []);
+  /*   const url = 'wss://norma.nomoreparties.space/api';
+  const websocket = new WebSocket(url);
 
+  // когда WebSocket-соединение успешно откроется,
+  websocket.addEventListener('message', (ev) => {
+    // отправим серверу приветственное сообщение
+    //websocket.send('say hi to server!');
+
+    console.log(ev);
+  }); */
   return (
     <div className={styles.app}>
       <AppHeader />
