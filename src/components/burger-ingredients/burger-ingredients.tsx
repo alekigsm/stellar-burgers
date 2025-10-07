@@ -14,7 +14,7 @@ import {
 import { Preloader } from '@ui';
 import { getIngredients } from '../../slice/burger/actions';
 import { useDispatch, useSelector } from '../../services/store';
-
+import { useDrag } from 'react-dnd';
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */
 

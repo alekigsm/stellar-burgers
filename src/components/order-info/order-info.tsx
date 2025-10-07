@@ -2,17 +2,16 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from 'react-redux';
 import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
-import { selectorOrders } from '../../slice/order/orderSlice';
+import { getOrdersLoading, selectorOrders } from '../../slice/order/orderSlice';
 import { useParams } from 'react-router-dom';
+import { useSelector } from '../../services/store';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const ingredients = useSelector(getIngredientsSelector);
   const orders = useSelector(selectorOrders);
-  const number = useParams();
-
+  const { number } = useParams();
   // Находим заказ по номеру
   const orderData = orders.find((item) => item.number === Number(number));
 

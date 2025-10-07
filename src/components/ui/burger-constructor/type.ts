@@ -1,4 +1,5 @@
 import { TOrder } from '@utils-types';
+import { ConnectDragSource } from 'react-dnd';
 
 export type BurgerConstructorUIProps = {
   constructorItems: any;

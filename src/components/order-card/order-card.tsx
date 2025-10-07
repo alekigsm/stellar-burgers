@@ -5,13 +5,12 @@ import { OrderCardProps } from './type';
 import { TIngredient } from '@utils-types';
 import { OrderCardUI } from '../ui/order-card';
 import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from '../../services/store';
 
 const maxIngredients = 6;
 
 export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
   const location = useLocation();
-
   const ingredients = useSelector(getIngredientsSelector);
 
   /** TODO: взять переменную из стора */

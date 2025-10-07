@@ -29,6 +29,9 @@ export const feedSlice = createSlice({
   //селекторы состояния
   selectors: {
     getFeed: (state) => state.feed,
+    getFeedOrders: (state) => state.feed.orders,
+    getFeedTotal: (state) => state.feed.total,
+    getFeedTotalToday: (state) => state.feed.totalToday,
     getFeedsLoading: (state) => state.loading,
     getFeedsError: (state) => state.error
   },
@@ -52,5 +55,12 @@ export const feedSlice = createSlice({
 });
 
 export const { setFeeds } = feedSlice.actions;
-export const { getFeed, getFeedsLoading, getFeedsError } = feedSlice.selectors;
+export const {
+  getFeed,
+  getFeedsLoading,
+  getFeedsError,
+  getFeedOrders,
+  getFeedTotal,
+  getFeedTotalToday
+} = feedSlice.selectors;
 export default feedSlice.reducer;

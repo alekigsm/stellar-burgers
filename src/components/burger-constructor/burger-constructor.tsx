@@ -1,7 +1,8 @@
 import { FC, useMemo } from 'react';
-import { TConstructorIngredient } from '@utils-types';
+import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import {
+  addIngredient,
   getBurgerConstructorOrderModalData,
   getBurgerConstructorOrderRequest,
   getBurgerConstructorSelector,
@@ -13,6 +14,7 @@ import { getUserData } from '../../slice/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { orderBurger } from '../../slice/constructor/actions';
 import { useDispatch, useSelector } from '../../services/store';
+import { useDrop } from 'react-dnd';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems,
@@ -35,6 +37,20 @@ export const BurgerConstructor: FC = () => {
     }
   };
 
+  /* //dnd
+  const onDropHandler = (item: { ingredient: TIngredient }) => {
+    if (item && item.ingredient) {
+      dispatch(addIngredient(item.ingredient));
+    }
+  };
+
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop: (item: { ingredient: TIngredient }) => {
+      onDropHandler(item);
+    }
+  });
+  // */
   const closeOrderModal = () => {
     if (orderRequest) dispatch(resetOrderRequest());
     if (orderModalData) dispatch(resetOrderModalData());
@@ -54,6 +70,7 @@ export const BurgerConstructor: FC = () => {
   );
 
   return (
+    // <div ref={dropTarget}>
     <BurgerConstructorUI
       price={price}
       orderRequest={orderRequest}
@@ -63,5 +80,6 @@ export const BurgerConstructor: FC = () => {
       closeOrderModal={closeOrderModal}
       onRemoveIngredient={handleRemoveIngredient}
     />
+    //</div>
   );
 };
