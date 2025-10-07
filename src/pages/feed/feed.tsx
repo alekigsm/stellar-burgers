@@ -10,7 +10,7 @@ export const Feed: FC = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector(getFeed);
   const loading = useSelector(getFeedsLoading);
-  // вопрос
+
   useEffect(() => {
     // Загружаем только если ингредиентов еще нет
     if (orders.length === 0 && !loading) {
@@ -28,7 +28,7 @@ export const Feed: FC = () => {
       orders={orders}
       handleGetFeeds={() => {
         dispatch(getFeeds());
-        //console.log('rr');
+        //console.log('tyt');
       }}
     />
   );

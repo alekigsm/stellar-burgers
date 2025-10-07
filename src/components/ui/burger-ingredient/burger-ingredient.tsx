@@ -14,7 +14,7 @@ import { useDrag } from 'react-dnd';
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
     const { image, price, name, _id } = ingredient;
-    /* 
+
     //dnd
     const [{ isDragging }, dragRef] = useDrag({
       type: 'ingredient',
@@ -23,7 +23,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
         isDragging: monitor.isDragging()
       })
     });
-    // */
+    //
     return (
       <li className={styles.container}>
         <Link
@@ -33,7 +33,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
         >
           {count && <Counter count={count} />}
           <img
-            //ref={dragRef}
+            ref={dragRef}
             className={styles.img}
             src={image}
             alt='картинка ингредиента.'

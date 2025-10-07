@@ -42,19 +42,7 @@ export const burgerConstructorSlicer = createSlice({
           (item) => item.id !== action.payload
         );
     },
-    /* moveIngredient: (
-      state,
-      action: PayloadAction<{ from: number; to: number }>
-    ) => {
-      const { from, to } = action.payload;
-      const [movedItem] = state.constructorItems.ingredients.splice(from, 1);
-      console.log('первый', movedItem.name);
-      state.constructorItems.ingredients.splice(to, 0, movedItem);
-      console.log(
-        'второй',
-        state.constructorItems.ingredients.map((item) => item.name)
-      );
-    }, */
+
     moveIngredient: (
       state,
       action: PayloadAction<{ from: number; to: number }>

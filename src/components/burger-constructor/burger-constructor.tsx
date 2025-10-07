@@ -37,7 +37,7 @@ export const BurgerConstructor: FC = () => {
     }
   };
 
-  /* //dnd
+  //dnd
   const onDropHandler = (item: { ingredient: TIngredient }) => {
     if (item && item.ingredient) {
       dispatch(addIngredient(item.ingredient));
@@ -50,7 +50,7 @@ export const BurgerConstructor: FC = () => {
       onDropHandler(item);
     }
   });
-  // */
+  //
   const closeOrderModal = () => {
     if (orderRequest) dispatch(resetOrderRequest());
     if (orderModalData) dispatch(resetOrderModalData());
@@ -70,16 +70,16 @@ export const BurgerConstructor: FC = () => {
   );
 
   return (
-    // <div ref={dropTarget}>
-    <BurgerConstructorUI
-      price={price}
-      orderRequest={orderRequest}
-      constructorItems={constructorItems}
-      orderModalData={orderModalData}
-      onOrderClick={onOrderClick}
-      closeOrderModal={closeOrderModal}
-      onRemoveIngredient={handleRemoveIngredient}
-    />
-    //</div>
+    <div ref={dropTarget}>
+      <BurgerConstructorUI
+        price={price}
+        orderRequest={orderRequest}
+        constructorItems={constructorItems}
+        orderModalData={orderModalData}
+        onOrderClick={onOrderClick}
+        closeOrderModal={closeOrderModal}
+        onRemoveIngredient={handleRemoveIngredient}
+      />
+    </div>
   );
 };

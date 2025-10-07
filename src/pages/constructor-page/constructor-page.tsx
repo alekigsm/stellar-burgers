@@ -7,6 +7,8 @@ import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC } from 'react';
 import { getIngredientsLoading } from '../../slice/burger/ingredientsSlice';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
@@ -23,9 +25,12 @@ export const ConstructorPage: FC = () => {
           >
             Соберите бургер
           </h1>
+
           <div className={`${styles.main} pl-5 pr-5`}>
-            <BurgerIngredients />
-            <BurgerConstructor />
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </DndProvider>
           </div>
         </main>
       )}
