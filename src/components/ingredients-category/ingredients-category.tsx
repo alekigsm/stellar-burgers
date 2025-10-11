@@ -2,9 +2,9 @@ import { forwardRef, useMemo } from 'react';
 import { TIngredientsCategoryProps } from './type';
 import { TIngredient } from '@utils-types';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
-import { useSelector } from 'react-redux';
 import { getIngredientsSelector } from '../../slice/burger/ingredientsSlice';
 import { getBurgerConstructorSelector } from '../../slice/constructor/constructorSlice';
+import { useSelector } from '../../services/store';
 
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,

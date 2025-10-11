@@ -17,12 +17,18 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 import { useEffect } from 'react';
 import { getUser } from '../../slice/user/actions';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
+import { getIngredients } from '../../slice/burger/actions';
+import {
+  getIngredientsLoading,
+  getIngredientsSelector
+} from '../../slice/burger/ingredientsSlice';
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
-
+  const ingredients = useSelector(getIngredientsSelector);
+  const loading = useSelector(getIngredientsLoading);
   const handleCloseModal = () => {
     navigate(-1);
   };
@@ -31,6 +37,13 @@ const App = () => {
   useEffect(() => {
     dispatch(getUser());
   }, []);
+
+  useEffect(() => {
+    // Загружаем только если ингредиентов еще нет
+    if (ingredients.length === 0 && !loading) {
+      dispatch(getIngredients());
+    }
+  }, [dispatch, ingredients.length, loading]);
   /*   const url = 'wss://norma.nomoreparties.space/api';
   const websocket = new WebSocket(url);
 
