@@ -1,5 +1,6 @@
 import { RefObject } from 'react';
 import { TIngredient, TTabMode } from '@utils-types';
+import { ConnectDragSource } from 'react-dnd';
 
 export type BurgerIngredientsUIProps = {
   currentTab: TTabMode;

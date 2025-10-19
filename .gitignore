@@ -2,3 +2,8 @@ node_modules
 .env
 .idea
 dist
+# Storybook
+.storybook/*
+storybook-static/
+storybook-dist/
+.sb/

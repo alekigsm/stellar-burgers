@@ -1,4 +1,5 @@
 import { TOrder } from '@utils-types';
+import { ConnectDragSource } from 'react-dnd';
 
 export type BurgerConstructorUIProps = {
   constructorItems: any;
@@ -7,4 +8,5 @@ export type BurgerConstructorUIProps = {
   orderModalData: TOrder | null;
   onOrderClick: () => void;
   closeOrderModal: () => void;
+  onRemoveIngredient: (id: string) => void;
 };
