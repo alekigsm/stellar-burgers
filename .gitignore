@@ -7,3 +7,4 @@ dist
 storybook-static/
 storybook-dist/
 .sb/
+/coverage/*

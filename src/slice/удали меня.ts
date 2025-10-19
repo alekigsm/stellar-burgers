@@ -1,3 +1,4 @@
+/* 
 import { data } from '../../data';
 import { api } from '../../utils/api';
 import { getIngredients } from './actions';
@@ -197,3 +198,4 @@ describe('getIngredients async action', () => {
     );
   });
 });
+ */

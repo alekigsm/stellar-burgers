@@ -5,7 +5,8 @@
 
 import type { Config } from 'jest';
 import type { JestConfigWithTsJest } from 'ts-jest';
-const config: Config = {
+
+const config: JestConfigWithTsJest = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -35,7 +36,6 @@ const config: Config = {
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
   preset: 'ts-jest',
-  // не уверен
   transform: {
     // '^.+\\.[tj]sx?$' для обработки файлов js/ts с помощью `ts-jest`
     // '^.+\\.m?[tj]sx?$' для обработки файлов js/ts/mjs/mts с помощью `ts-jest`
@@ -45,7 +45,7 @@ const config: Config = {
         // настройки для ts-jest
       }
     ]
-  }
+  },
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -96,15 +96,13 @@ const config: Config = {
   //   "cjs",
   //   "jsx",
   //   "ts",
-  //   "mts",
-  //   "cts",
   //   "tsx",
   //   "json",
   //   "node"
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: { '^@api$': '<rootDir>/src/utils/burger-api.ts' }
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -170,8 +168,8 @@ const config: Config = {
 
   // The glob patterns Jest uses to detect test files
   // testMatch: [
-  //   "**/__tests__/**/*.?([mc])[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).?([mc])[jt]s?(x)"
+  //   "**/__tests__/**/*.[jt]s?(x)",
+  //   "**/?(*.)+(spec|test).[tj]s?(x)"
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
