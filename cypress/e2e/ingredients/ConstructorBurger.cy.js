@@ -1,45 +1,18 @@
 /// <reference types="cypress" />
 
-/// JSON файл с фикстурой можно загрузить напрямую используя
-// встроенный JavaScript сборщик
-// 📝 Это показывает альтернативный способ загрузки фикстур через require()
-// вместо использования cy.fixture()
 const exp = require('constants');
 const requiredExample = require('../../fixtures/ingredients');
 
 context('ConstructorBurger', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4000/');
-
-    // загрузить файл фикстуры ingredients.json и сохранить
-    // в объекте контекста теста
-    // 💡 Фикстура загружается один раз перед каждым тестом и сохраняется как alias 'example'
-    // чтобы быть доступной через this.example в тестах
     cy.fixture('ingredients.json').as('example');
   });
 
   it('cy.fixture() - загрузить фикстуру', () => {
-    // https://on.cypress.io/fixture
-
-    // Вместо того чтобы писать ответ в коде, вы можете
-    // использовать содержимое файла фикстуры.
-    // 🎯 Это демонстрирует преимущество фикстур - переиспользование тестовых данных
-
-    // когда приложение делает Ajax запрос соответствующий "GET **/comments/*"
-    // Cypress перехватит его и ответит объектом из фикстуры `ingredients.json`
-    // 🔧 Intercept перехватывает сетевые запросы и подменяет ответ на данные из фикстуры
-    // https://norma.nomoreparties.space/api/ingredients
-
-    cy.intercept('GET', '**/norma.nomoreparties.space/api/ingredients*', {
+    cy.intercept('GET', '**/norma.education-services.ru/api/ingredients*', {
       fixture: 'ingredients.json'
     }).as('getIngredientsApi');
-
-    // у нас есть код, который получает комментарий когда
-    // кнопка нажата в scripts.js
-    // 🖱️ Эмулируется пользовательское действие, которое запускает сетевой запрос
-    // cy.get('.fixture-btn').click();
-
-    // ⏳ Ожидание завершения перехваченного запроса и проверка ответа
     cy.wait('@getIngredientsApi')
       .its('response.body')
       .should((body) => {
