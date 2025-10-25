@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
-
+import { testUrl } from '../../test-constants';
 const exp = require('constants');
 const requiredExample = require('../../fixtures/ingredients');
 
 context('ConstructorBurger', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4000/');
+    cy.visit(testUrl);
     cy.fixture('ingredients.json').as('example');
   });
 

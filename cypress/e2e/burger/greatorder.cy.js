@@ -1,7 +1,8 @@
 /// <reference types="cypress" />
+import { testUrl } from '../../test-constants';
 context('ConstructorBurger', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4000/');
+    cy.visit(testUrl);
     cy.fixture('user.json').as('example');
   });
   //   Создание заказа:
