@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZGVkMTdhNjczMDg2MDAxYmE4Yjg2ZCIsImlhdCI6MTc2MDk2NTAwNSwiZXhwIjoxNzYwOTY2MjA1fQ.Eluw0QFiy3SfCRu5BVVjYbuunvLhZV0dNZOe0odUfOM",
+  "refreshToken": "bd2779151682a163a7d080e9798e4cd51e255a1d7e7eff755bc4ef8a96cdca0906300895cceb8d86",
+  "user": {
+    "email": "пусто@ya.ru",
+    "name": "sasha"
+  }
+}

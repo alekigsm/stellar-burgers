@@ -46,6 +46,8 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
         </Link>
 
         <AddButton
+          data-cy='trata'
+          data-testid='trataid'
           text='Добавить'
           onClick={handleAdd}
           extraClass={`${styles.addButton} mt-8`}
