@@ -1,4 +1,35 @@
 /// <reference types="cypress" />
+
+Cypress.Commands.add('checkAppLoaded', (timeout = 10000) => {
+  cy.get('body').should('be.visible');
+  cy.log('ожидаем около:', timeout, 'секунд');
+  cy.get('[data-testid="main"]', { timeout }).should('be.visible');
+});
+// commands.js
+
+// Команда для добавления ингредиентов в конструктор
+Cypress.Commands.add('addIngredientsToConstructor', () => {
+  cy.log('Добавляем ингредиенты в конструктор');
+
+  cy.get('.common_button').eq(0).click();
+  cy.get('[data-cy="Tabs"]').children().eq(1).click();
+  cy.get('.common_button').eq(3).click();
+  cy.get('[data-cy="Tabs"]').children().eq(2).click();
+  cy.get('.common_button').last().click();
+});
+
+// Команда для проверки ингредиентов в конструкторе
+Cypress.Commands.add('verifyConstructorIngredients', () => {
+  cy.log('Проверяем ингредиенты в конструкторе');
+
+  cy.get('.constructor-element').contains('Краторная булка N-200i');
+  cy.get('.constructor-element').contains(
+    'Филе Люминесцентного тетраодонтимформа'
+  );
+  cy.get('.constructor-element').contains(
+    'Соус с шипами Антарианского плоскоходца'
+  );
+});
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -11,7 +42,7 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+// Cypress.Commands.add('bodyLoading', (email, password) => { ... })
 //
 //
 // -- This is a child command --

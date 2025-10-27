@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
-import { testUrl } from '../../test-constants';
+import { testUrl, timeout } from '../../test-constants';
 context('ConstructorBurger', () => {
   beforeEach(() => {
     cy.visit(testUrl);
     cy.fixture('user.json').as('example');
+    cy.checkAppLoaded(timeout);
   });
   //   Создание заказа:
   // Созданы моковые данные ответа на запрос данных пользователя.
@@ -35,19 +36,9 @@ context('ConstructorBurger', () => {
           'bd2779151682a163a7d080e9798e4cd51e255a1d7e7eff755bc4ef8a96cdca0906300895cceb8d86'
         );
       });
-
-    cy.get(`.common_button`).eq(0).click();
-    cy.get(`[data-cy='Tabs']`).children().eq(1).click();
-    cy.get(`.common_button`).eq(3).click();
-    cy.get(`[data-cy='Tabs']`).children().eq(2).click();
-    cy.get(`.common_button`).last().click();
-    cy.get(`.constructor-element`).contains('Краторная булка N-200i');
-    cy.get(`.constructor-element`).contains(
-      'Филе Люминесцентного тетраодонтимформа'
-    );
-    cy.get(`.constructor-element`).contains(
-      'Соус с шипами Антарианского плоскоходца'
-    );
+    cy.checkAppLoaded(timeout);
+    cy.addIngredientsToConstructor();
+    cy.verifyConstructorIngredients();
 
     cy.contains('button', 'Оформить заказ').click();
 

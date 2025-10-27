@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { testUrl } from '../../test-constants';
+import { testUrl, timeout } from '../../test-constants';
 const exp = require('constants');
 const requiredExample = require('../../fixtures/ingredients');
 
@@ -7,6 +7,7 @@ context('ConstructorBurger', () => {
   beforeEach(() => {
     cy.visit(testUrl);
     cy.fixture('ingredients.json').as('example');
+    cy.checkAppLoaded(timeout);
   });
 
   it('cy.fixture() - загрузить фикстуру', () => {
@@ -27,18 +28,8 @@ context('ConstructorBurger', () => {
   // 3 - переключится на соус добавить 1ю соус
   // 4 проверить что в конструторе есть буелка, начинка , соус по имени
   it('добавление ингредиента из списка в конструктор', function () {
-    cy.get(`.common_button`).eq(0).click();
-    cy.get(`[data-cy='Tabs']`).children().eq(1).click();
-    cy.get(`.common_button`).eq(3).click();
-    cy.get(`[data-cy='Tabs']`).children().eq(2).click();
-    cy.get(`.common_button`).last().click();
-    cy.get(`.constructor-element`).contains('Краторная булка N-200i');
-    cy.get(`.constructor-element`).contains(
-      'Филе Люминесцентного тетраодонтимформа'
-    );
-    cy.get(`.constructor-element`).contains(
-      'Соус с шипами Антарианского плоскоходца'
-    );
+    cy.addIngredientsToConstructor();
+    cy.verifyConstructorIngredients();
   });
   it('открытие модального окна ингридиента', function () {
     cy.get(`[alt='картинка ингредиента.']`).eq(0).click();
